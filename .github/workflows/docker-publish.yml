@@ -30,7 +30,7 @@ jobs:
         run: |
           if [ -f docker-compose.test.yml ]; then
             docker-compose --file docker-compose.test.yml build
-            docker-compose --file docker-compose.test.yml run sut
+            docker-compose --file docker-compose.test.yml run web
           else
             docker build . --file Dockerfile
           fi
@@ -39,7 +39,7 @@ jobs:
   # See also https://docs.docker.com/docker-hub/builds/
   push:
     # Ensure test job passes before pushing image.
-    #needs: test
+    needs: test
 
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
